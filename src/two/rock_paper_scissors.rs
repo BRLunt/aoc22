@@ -28,7 +28,7 @@ fn outcome_points(my_choice: &HANDS, opponents_choice: &HANDS) -> u8 {
     return match (my_choice, opponents_choice) {
         (HANDS::PAPER, HANDS::ROCK) => 6,
         (HANDS::PAPER, HANDS::SCISSORS) => 0,
-        (HANDS::PAPER, HANDS::PAPER) => 6,
+        (HANDS::PAPER, HANDS::PAPER) => 3,
         (HANDS::ROCK, HANDS::PAPER) => 0,
         (HANDS::ROCK, HANDS::SCISSORS) => 6,
         (HANDS::ROCK, HANDS::ROCK) => 3,
@@ -63,7 +63,7 @@ fn read_strat_file(path: &str) -> Vec<(HANDS, HANDS)> {
     strat_vec
 }
 
-fn calculate_points(path: String) -> u32 {
+fn calculate_points(path: &str) -> u32 {
     let strat = read_strat_file(&path);
     let mut points = 0;
     for (opponent_choice, my_choice) in strat {
@@ -74,15 +74,15 @@ fn calculate_points(path: String) -> u32 {
 
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
     fn test_calculate_points() {
-        let path = "./src/two/strat_one.txt".to_string();
+        let path = "./src/two/strat_one.txt";
         let expected_points = 15;
 
-        let points = calculate_points(path.to_string());
+        let points = calculate_points(path);
         assert_eq!(points, expected_points);
     }
 }
